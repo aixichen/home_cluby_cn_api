@@ -2,7 +2,7 @@ FROM node:8.11.3-alpine
 
 MAINTAINER mandarava
 
-ADD ./api /api/
+ADD ./ /api/
 
 WORKDIR /api
 
