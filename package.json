@@ -1,7 +1,7 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "mandarava",
+  "description": "",
   "private": true,
   "dependencies": {
     "egg": "^2.2.1",
@@ -39,6 +39,6 @@
     "type": "git",
     "url": ""
   },
-  "author": "mandarava",
+  "author": "",
   "license": "MIT"
 }
