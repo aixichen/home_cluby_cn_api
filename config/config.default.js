@@ -18,5 +18,10 @@ module.exports = appInfo => {
     password: '123456',
   };
 
+  config.jwt = {
+    enable: false,
+    secret: 'xxxxxxxxxxxxx',
+  };
+
   return config;
 };

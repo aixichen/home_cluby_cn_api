@@ -9,21 +9,10 @@ function toInt(str) {
 }
 
 class UserController extends Controller {
-  async login() {
+  async index() {
     const ctx = this.ctx;
-    const { email, password } = ctx.request.body;
-    const query = {};
-    query.email = email;
-    query.password = password;
-    const user = await ctx.model.User.findOne(query);
-    if (user !== null) {
-      user.token = ctx.service.user.createToken({ id: user.id });
-      ctx.body = user;
-      ctx.status = 201;
-    } else {
-      ctx.body = {};
-      ctx.status = 404;
-    }
+    const query = { limit: toInt(ctx.query.limit), offset: toInt(ctx.query.offset) };
+    ctx.body = await ctx.model.User.findAll(query);
   }
 
   async show() {
@@ -33,8 +22,8 @@ class UserController extends Controller {
 
   async create() {
     const ctx = this.ctx;
-    const { name, avatar, email, mobile, password, prefix } = ctx.request.body;
-    const user = await ctx.model.User.create({ name, avatar, email, mobile, password, prefix });
+    const { name, age } = ctx.request.body;
+    const user = await ctx.model.User.create({ name, age });
     ctx.status = 201;
     ctx.body = user;
   }
