@@ -6,9 +6,6 @@ module.exports = appInfo => {
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1534411929422_4439';
 
-  // add your config here
-  config.middleware = [];
-
   config.sequelize = {
     dialect: 'mysql',
     database: 'test',
@@ -17,10 +14,18 @@ module.exports = appInfo => {
     username: 'root',
     password: '123456',
   };
-
+  config.security = {
+    xframe: {
+      enable: false,
+    },
+    csrf: {
+      enable: false,
+    },
+  };
   config.jwt = {
-    enable: false,
+    enable: true,
     secret: 'xxxxxxxxxxxxx',
+    match: '/jwt',
   };
 
   return config;

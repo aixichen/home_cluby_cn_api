@@ -5,7 +5,10 @@
  */
 module.exports = app => {
   const { router, controller } = app;
-  router.get('/', controller.home.index);
   router.post('/user/login', controller.user.login);
-  router.resources('user', '/user', controller.user);
+  router.post('/user/register', controller.user.create);
+  router.get('/user/current', app.jwt, controller.user.show);
+  router.resources('user', '/user', app.jwt, controller.user);
+
+  router.resources('account', '/account', app.jwt, controller.account);
 };

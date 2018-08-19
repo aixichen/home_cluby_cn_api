@@ -12,23 +12,28 @@ class UserController extends Controller {
   async login() {
     const ctx = this.ctx;
     const { email, password } = ctx.request.body;
+    this.logger.debug('%j', ctx.request.body);
     const query = {};
     query.email = email;
     query.password = password;
-    const user = await ctx.model.User.findOne(query);
+    const user = await ctx.model.User.findOne({ where: query });
     if (user !== null) {
-      user.token = ctx.service.user.createToken({ id: user.id });
-      ctx.body = user;
-      ctx.status = 201;
+      const temp_token = ctx.service.user.createToken({ id: user.id, avatar: user.avatar, email: user.email, mobile: user.mobile, create_at: user.create_at });
+      ctx.helper.success(ctx, { token: temp_token });
     } else {
-      ctx.body = {};
-      ctx.status = 404;
+      ctx.helper.error(ctx, 404, '登录失败');
     }
   }
 
   async show() {
     const ctx = this.ctx;
-    ctx.body = await ctx.model.User.findById(toInt(ctx.params.id));
+    const _id = ctx.state.user.id;
+    const user = await ctx.model.User.findById(toInt(_id));
+    if (user) {
+      ctx.helper.success(ctx, user);
+    } else {
+      ctx.helper.error(ctx, 404, '用户信息查询失败');
+    }
   }
 
   async create() {

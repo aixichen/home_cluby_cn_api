@@ -40,36 +40,11 @@ class UserService extends Service {
     const second = date.getSeconds();
     return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
   }
-
-  verifyToken(token) {
-    return new Promise(resolve => {
-      this.ctx.jwt.verify(token, this.ctx.config.jwt.secret, function(err, decoded) {
-        const result = {};
-        if (err) {
-          /*
-            err = {
-              name: 'TokenExpiredError',
-              message: 'jwt expired',
-              expiredAt: 1408621000
-            }
-          */
-          result.verify = false;
-          result.message = err.message;
-        } else {
-          result.verify = true;
-          result.message = decoded;
-        }
-        resolve(result);
-      });
-    });
-  }
-
   createToken(data) {
-    return this.ctx.jwt.sign(data, this.ctx.config.jwt.secret, {
+    return this.app.jwt.sign(data, this.app.config.jwt.secret, {
       expiresIn: '12h',
     });
   }
-
 }
 
 module.exports = UserService;
