@@ -40,6 +40,11 @@ class AccountService extends Service {
     result.pagination.total = tempTotal;
     return result;
   }
+
+  async create(user_id, data){
+    data.uid=user_id;
+    return await this.ctx.model.Account.create(data);
+  }
 }
 
 module.exports = AccountService;
