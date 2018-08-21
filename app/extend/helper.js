@@ -7,11 +7,16 @@ exports.getAccessToken = ctx => {
 
 exports.pagingParam = params => {
   const paging_param = {
-    currentPage: params.currentPage ? params.currentPage : 1,
-    pageSize: params.pageSize ? params.pageSize : 10,
+    currentPage: params.currentPage ? exports.toInt(params.currentPage) : 1,
+    pageSize: params.pageSize ? exports.toInt(params.pageSize) : 10,
   };
 
   return paging_param;
+};
+exports.toInt = str => {
+  if (typeof str === 'number') return str;
+  if (!str) return str;
+  return parseInt(str, 10) || 0;
 };
 
 // 处理成功响应

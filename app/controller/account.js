@@ -15,7 +15,7 @@ class AccountController extends Controller {
       const user_id = ctx.state.user.id;
       const { currentPage, pageSize } = ctx.helper.pagingParam(ctx.query);
       const result = await ctx.service.account.index(user_id, query, currentPage, pageSize);
-      this.ctx.helper.success(ctx, result);
+      ctx.body = result;
     } catch (error) {
       this.ctx.helper.error(this.ctx, 404, error.message);
     }

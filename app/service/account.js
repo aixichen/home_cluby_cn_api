@@ -6,15 +6,25 @@ class AccountService extends Service {
     query.uid = user_id;
     const offset = pageSize * (currentPage - 1);
     const limit = pageSize;
-    const result = await this.ctx.model.Account.findAndCountAll({
+    const result = {};
+
+    const result_list = await this.ctx.model.Account.findAll({
+      where: query,
       offset,
       limit,
       order: [[ 'amount_date', 'desc' ], [ 'updated_at', 'desc' ]],
-    }).then(function(temp_result) {
-      temp_result.pageSize = pageSize;
-      temp_result.currentPage = currentPage;
-      return temp_result;
     });
+
+    result_list.forEach(item => {
+      item.amount_type_cn = '1';
+    });
+    const tempTotal = await this.ctx.model.Account.count({ where: query });
+    result.list = result_list;
+    result.test = '3';
+    result.pagination = {};
+    result.pagination.pageSize = pageSize;
+    result.pagination.currentPage = currentPage;
+    result.pagination.total = tempTotal;
     return result;
   }
 }

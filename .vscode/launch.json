@@ -7,7 +7,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Egg Debug",
+              "name": "Egg Debug",
             "runtimeExecutable": "npm",
             "runtimeArgs": [
                 "run",

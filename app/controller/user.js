@@ -2,12 +2,6 @@
 
 const Controller = require('egg').Controller;
 
-function toInt(str) {
-  if (typeof str === 'number') return str;
-  if (!str) return str;
-  return parseInt(str, 10) || 0;
-}
-
 class UserController extends Controller {
   async login() {
     const ctx = this.ctx;
@@ -28,7 +22,7 @@ class UserController extends Controller {
   async show() {
     const ctx = this.ctx;
     const _id = ctx.state.user.id;
-    const user = await ctx.model.User.findById(toInt(_id));
+    const user = await ctx.model.User.findById(ctx.helper.toInt(_id));
     if (user) {
       ctx.helper.success(ctx, user);
     } else {
@@ -46,7 +40,7 @@ class UserController extends Controller {
 
   async update() {
     const ctx = this.ctx;
-    const id = toInt(ctx.params.id);
+    const id = ctx.helper.toInt(ctx.params.id);
     const user = await ctx.model.User.findById(id);
     if (!user) {
       ctx.status = 404;
@@ -60,7 +54,7 @@ class UserController extends Controller {
 
   async destroy() {
     const ctx = this.ctx;
-    const id = toInt(ctx.params.id);
+    const id = ctx.helper.toInt(ctx.params.id);
     const user = await ctx.model.User.findById(id);
     if (!user) {
       ctx.status = 404;

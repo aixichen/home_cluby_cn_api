@@ -17,6 +17,5 @@ module.exports = app => {
   }, {
     freezeTableName: true,
   });
-
   return Account;
 };
