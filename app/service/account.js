@@ -3,12 +3,35 @@ const Service = require('egg').Service;
 
 class AccountService extends Service {
   async index(user_id, query, currentPage, pageSize) {
-    query.uid = user_id;
+    const build={};
+    build.uid=user_id;
+    build.account_type=query.account_type
+    if(query.amount_type){
+      build.amount_type=query.amount_type;
+    }
+    
+    if(query.remark){
+      build.remark = {
+        $like: '%'+query.remark+'%',
+      }
+    }
+
+    if(query.date){
+      const start_time = query.date+' 00:00:00';
+      const end_time = query.date+' 23:59:59';
+      build.updated_at = {
+        $between: [ start_time, end_time ],
+      }
+    }
     const offset = pageSize * (currentPage - 1);
     const limit = pageSize;
     const result = {};
+
+    const build_amount_type = {};
+    build_amount_type.uid=user_id;
+    build_amount_type.account_type=query.account_type;
     const amount_type = await this.ctx.model.AccountAmountType.findAll({
-      where: query,
+      where: build_amount_type,
     }).then(result => {
       const temp_result = [];
       result.forEach(result_value => {
@@ -17,7 +40,7 @@ class AccountService extends Service {
       return temp_result;
     });
     result.list = await this.ctx.model.Account.findAll({
-      where: query,
+      where: build,
       offset,
       limit,
       order: [[ 'amount_date', 'desc' ], [ 'updated_at', 'desc' ]],
@@ -32,7 +55,7 @@ class AccountService extends Service {
     });
 
    
-    const tempTotal = await this.ctx.model.Account.count({ where: query });
+    const tempTotal = await this.ctx.model.Account.count({ where: build });
     
     result.pagination = {};
     result.pagination.pageSize = pageSize;

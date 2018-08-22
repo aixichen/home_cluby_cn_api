@@ -10,8 +10,20 @@ class AccountController extends Controller {
       if (!account_type) {
         throw new Error('account_type参数错误');
       }
+      const { remark, amount_type, date } = ctx.query;
       const query = {};
       query.account_type = account_type;
+      if (remark) {
+        query.remark = remark;
+      }
+
+      if (amount_type) {
+        query.amount_type = amount_type;
+      }
+
+      if (date) {
+        query.date = date;
+      }
       const user_id = ctx.state.user.id;
       const { currentPage, pageSize } = ctx.helper.pagingParam(ctx.query);
       const result = await ctx.service.account.index(user_id, query, currentPage, pageSize);
