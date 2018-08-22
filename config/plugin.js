@@ -10,3 +10,8 @@ exports.jwt = {
   enable: true,
   package: 'egg-jwt',
 };
+
+exports.alinode = {
+  enable: true,
+  package: 'egg-alinode',
+};

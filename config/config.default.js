@@ -28,6 +28,13 @@ module.exports = appInfo => {
     secret: 'xxxxxxxxxxxxx',
     match: '/jwt',
   };
+  config.alinode = {
+    server: 'wss://agentserver.node.aliyun.com:8080',
+    appid: '75555',
+    secret: '3a36c1916de5e5df7bd921a89183d1a49e6ab996',
+    logdir: '/api/',
+    agentidMode: 'IP',
+  };
 
   return config;
 };
