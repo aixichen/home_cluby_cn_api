@@ -19,6 +19,12 @@ exports.toInt = str => {
   return parseInt(str, 10) || 0;
 };
 
+exports.stringToInt = str => {
+  if (typeof str === 'number') return str;
+  if (!str) return str;
+  return Number(str) || 0;
+};
+
 // 处理成功响应
 exports.success = (ctx, result = null, messages = '请求成功', status = 201) => {
   ctx.body = {
