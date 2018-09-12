@@ -19,7 +19,13 @@ class AnalysisController extends Controller {
       }
       const user_id = ctx.state.user.id;
       const result = await ctx.service.analysis.chartByAmountType(user_id, query);
-      ctx.body = result;
+      const temp_result = result.map(item => {
+        return {
+          x: item.amount_type_cn,
+          y: item.amount_sum,
+        };
+      });
+      ctx.body = temp_result;
     } catch (error) {
       this.ctx.helper.error(this.ctx, 404, error.message);
     }
