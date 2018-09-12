@@ -22,7 +22,7 @@ class AnalysisController extends Controller {
       const temp_result = result.map(item => {
         return {
           x: item.amount_type_cn,
-          y: item.amount_sum,
+          y: ctx.helper.toInt(item.amount_sum),
         };
       });
       ctx.body = temp_result;
