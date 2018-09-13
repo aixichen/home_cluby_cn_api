@@ -12,6 +12,7 @@ module.exports = app => {
   router.resources('user', '/api/user', app.jwt, controller.user);
 
   router.resources('account', '/api/account', app.jwt, controller.account);
+  router.resources('accountAmountType', '/api/account/amount_type', app.jwt, controller.account);
   // 查询分析数据
   router.get('/api/analysis/chart/amount_type', app.jwt, controller.analysis.chartByAmountType);
 };
