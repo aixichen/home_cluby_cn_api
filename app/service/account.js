@@ -68,6 +68,11 @@ class AccountService extends Service {
     data.uid=user_id;
     return await this.ctx.model.Account.create(data);
   }
+  async update(user_id, data){
+    data.uid = user_id;
+    const account = await this.ctx.model.Account.findById(data.id);
+    return await account.update(data);
+  }
 }
 
 module.exports = AccountService;
