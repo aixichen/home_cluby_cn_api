@@ -11,8 +11,8 @@ module.exports = appInfo => {
     database: 'home',
     host: 'mysqldb',
     port: '3306',
-    username: 'root',
-    password: '123456',
+    username: 'home',
+    password: 'home123456',
     timezone: '+08:00',
   };
   config.security = {
